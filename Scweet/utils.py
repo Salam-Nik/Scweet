@@ -119,17 +119,19 @@ def get_data(card, save_images=False, save_dir=None):
     return tweet
 
 
-def init_driver(headless=True, proxy=None, show_images=False, option=None, firefox=False, env=None):
+def init_driver(headless=True, proxy=None, show_images=False, option=None, firefox=False, env=None, driver_path=None):
     """ initiate a chromedriver or firefoxdriver instance
         --option : other option to add (str)
     """
 
     if firefox:
         options = FirefoxOptions()
-        driver_path = geckodriver_autoinstaller.install()
+        if not driver_path:
+            driver_path = geckodriver_autoinstaller.install()
     else:
         options = ChromeOptions()
-        driver_path = chromedriver_autoinstaller.install()
+        if not driver_path:
+            driver_path = chromedriver_autoinstaller.install()
 
     if headless is True:
         print("Scraping on headless mode.")
